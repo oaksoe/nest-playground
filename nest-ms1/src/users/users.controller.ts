@@ -1,12 +1,12 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
     constructor() {}
   
     @Get()
-    @UseGuards(AuthGuard())
+    @UseGuards(new JwtAuthGuard())
     findAll() {
         return [];
     }
