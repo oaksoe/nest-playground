@@ -10,8 +10,8 @@ export class RpcCheckLoggedInUserGuard implements CanActivate {
         console.log('Data: ', data);
         
         // here check if the id from get route param and current req.user id is the same
-        return Number(data.userId) === data.user.id;
+        // return Number(data.userId) === data.user.id;
 
-        // return true;
+        return true;
     }
 }
