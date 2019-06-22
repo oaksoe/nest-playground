@@ -1,5 +1,5 @@
-import { Controller, Post, Req, Res, HttpStatus } from '@nestjs/common';
-import { Transport, Client, ClientProxy, MessagePattern } from '@nestjs/microservices';
+import { Controller, Post, Get, Param, Req, Res, HttpStatus } from '@nestjs/common';
+import { Transport, Client, ClientProxy } from '@nestjs/microservices';
 
 @Controller()
 export class UserController {
@@ -22,10 +22,15 @@ export class UserController {
         });
     }
 
-    // @MessagePattern({cmd: 'users.create'})
-    // public async rpcCreate(data: any) {
-    //     if (!data || (data && Object.keys(data).length === 0)) throw new Error('Missing some information.');
-
-    //     return data;
-    // }
+    @Get('users/:userId')
+    public async show(@Param('userId') userId: number, @Req() req, @Res() res) {
+        this.client.send({cmd: 'users.show'}, {userId, user: req.user}).subscribe({
+            next: user => {
+                res.status(HttpStatus.OK).json(user);
+            },
+            error: error => {
+                res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(error);
+            }
+        });
+    }
 }
