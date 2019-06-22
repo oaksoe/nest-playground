@@ -1,16 +1,17 @@
-import { Controller, UseFilters } from '@nestjs/common';
+import { Controller, UseFilters, UsePipes } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { RpcValidationException } from './rpc/rpc-validation.exception';
 import { RpcValidationFilter } from './rpc/rpc-validation.filter';
-
+import { RpcValidationPipe } from './rpc/rpc-validation.pipe';
+import { CreateUserRequest } from './models/create-user.request';
 
 @Controller()
-@UseFilters(new RpcValidationFilter())
 export class UserMsController {
-    @MessagePattern({cmd: 'users.create'})
-    public async rpcCreate(data: any) {
-        if (!data || (data && Object.keys(data).length === 0)) throw new RpcValidationException([]);
 
+    @MessagePattern({cmd: 'users.create'})
+    @UsePipes(new RpcValidationPipe())
+    @UseFilters(new RpcValidationFilter())
+    public async rpcCreate(data: CreateUserRequest) {
         return data;
     }
 }
