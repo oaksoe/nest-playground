@@ -3,7 +3,14 @@ import { Transport, Client, ClientProxy } from '@nestjs/microservices';
 
 @Controller()
 export class UserController {
-    @Client({transport: Transport.TCP, options: { port: 5667 }})
+    @Client({
+        transport: Transport.RMQ,
+        options: {
+            urls: [`amqp://localhost:5672`],
+            queue: 'cats_queue',
+            queueOptions: { durable: false },
+        },
+    })
     client: ClientProxy
 
     @Post('users')

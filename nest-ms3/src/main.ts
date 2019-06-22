@@ -1,19 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
-import { RpcValidationFilter } from './rpc/rpc-validation.filter';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
-
-    app.connectMicroservice({
-        transport: Transport.TCP,
+    const app = await NestFactory.createMicroservice(AppModule, {
+        transport: Transport.RMQ,
         options: {
-            port: 5667
-        }
+          urls: [`amqp://localhost:5672`],
+          queue: 'cats_queue',
+          queueOptions: { durable: false },
+        },
     });
-    
-    await app.startAllMicroservicesAsync();
-    await app.listen(3002);
+
+    app.listen(() => console.log('Microservice RabbitMQ is listening'));
 }
 bootstrap();

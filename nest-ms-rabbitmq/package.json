@@ -1,5 +1,5 @@
 {
-  "name": "nest-ms3",
+  "name": "nest-ms-rabbitmq",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -24,10 +24,7 @@
     "@nestjs/core": "^6.0.0",
     "@nestjs/microservices": "^6.3.1",
     "@nestjs/platform-express": "^6.0.0",
-    "amqp-connection-manager": "^2.3.2",
     "amqplib": "^0.5.3",
-    "class-transformer": "^0.2.3",
-    "class-validator": "^0.9.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3"
