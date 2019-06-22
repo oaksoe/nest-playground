@@ -12,9 +12,7 @@ async function bootstrap() {
             port: 5667
         }
     });
-
-    // app.useGlobalFilters(new RpcValidationFilter());
-
+    
     await app.startAllMicroservicesAsync();
     await app.listen(3002);
 }
